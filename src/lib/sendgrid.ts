@@ -1,19 +1,20 @@
-import { resend } from "@/lib/Resend";
-import VerificationEmail from "../../emails/VerificationEmail"
-import { ApiResponse } from "@/types/ApiResponse"
+import sgMail from '@sendgrid/mail';
 
-export async function sendVerificationEmail(email:string,
+import VerificationEmail from "../../emails/VerificationEmail"
+import { ApiResponse } from '@/types/ApiResponse';
+
+export async function mailSender(email:string,
     username: string,
     verifyCode: string,
     
 ):Promise<ApiResponse> {
     try {
         // Send verification email
-        await resend.emails.send({
-            from: "onboarding@resend.dev ",
+        await sgMail.send({
+            from: "22bec049@iiitdmj.ac.in",
             to:email,
             subject: " Anormous Message :Verify your email address",
-            react:VerificationEmail({username, otp:verifyCode})
+            html:VerificationEmail({username, otp:verifyCode})
             
             
         });
@@ -36,4 +37,3 @@ export async function sendVerificationEmail(email:string,
     }
 
 }
-
